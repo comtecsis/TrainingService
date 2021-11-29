@@ -29,8 +29,20 @@ public class ClientRepositoryImpl implements ClientRepository {
 
     @Override
     public void add(Client client) {
-        long id = (long) CLIENTS.size();
+        long id = (long) CLIENTS.size() + 1;
         client.setIdClient(id);
         CLIENTS.put(id, client);
+    }
+
+    @Override
+    public void update (Client client){
+        Client retrivedClient = CLIENTS.get(client.getIdClient());
+            retrivedClient.setName(client.getName());
+            retrivedClient.setLastName(client.getLastName());
+    }
+
+    @Override
+    public void remove(Long clientId) {
+        CLIENTS.remove(clientId);
     }
 }

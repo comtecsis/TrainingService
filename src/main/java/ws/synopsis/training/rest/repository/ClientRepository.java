@@ -7,4 +7,6 @@ import java.util.List;
 public interface ClientRepository {
     public List<Client> list();
     public void add(Client client);
+    public void update(Client client);
+    public void remove(Long clientId);
 }

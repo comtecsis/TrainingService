@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ws.synopsis.training.rest.bean.request.ClientRequest;
+import ws.synopsis.training.rest.bean.request.PutClientRequest;
 import ws.synopsis.training.rest.model.Client;
 import ws.synopsis.training.rest.repository.ClientRepository;
 import ws.synopsis.training.rest.service.ClientService;
@@ -27,6 +28,22 @@ public class ClientServiceImpl implements ClientService {
         clientRepository.add(
             Client.builder().name(beanReq.getName()).lastName(beanReq.getLastName()).build()
         );
+    }
+
+    @Override
+    public void update(PutClientRequest beanRq) {
+        clientRepository.update(
+                Client.builder()
+                    .idClient(beanRq.getId())
+                    .name(beanRq.getName())
+                    .lastName(beanRq.getLastName())
+                    .build()
+        );
+    }
+
+    @Override
+    public void remove(Long clientId) {
+        clientRepository.remove(clientId);
     }
 
 }
