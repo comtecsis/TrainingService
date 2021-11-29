@@ -1,17 +1,42 @@
 package ws.synopsis.training.rest.advice;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import ws.synopsis.training.rest.bean.response.TrainingResponse;
+import ws.synopsis.training.rest.bean.response.base.GenResponse;
+import ws.synopsis.training.rest.enumeration.StatusEnum;
 import ws.synopsis.training.rest.exception.TrainingFieldException;
 
 @ControllerAdvice
 public class TrainingAdvice {
 
+    private static final Logger logger = LoggerFactory.getLogger(TrainingAdvice.class);
+
     @ExceptionHandler({TrainingFieldException.class})
-    public ResponseEntity<TrainingResponse> general(TrainingFieldException e){
-        return ResponseEntity.internalServerError().body(TrainingResponse.builder().message(e.getMessage()).build());
+    public ResponseEntity<?> field(TrainingFieldException e){
+        logger.error(e.getMessage(), e);
+        TrainingResponse resp = TrainingResponse.builder().message(e.getMessage()).build();
+        return ResponseEntity.internalServerError().body(
+                GenResponse.<TrainingResponse>builder()
+                        .status(StatusEnum.FIELD_EMPTY.getStatus())
+                        .data(resp)
+                        .build()
+        );
+    }
+
+    @ExceptionHandler({Exception.class})
+    public ResponseEntity<?> general(Exception e){
+        logger.error(e.getMessage(), e);
+        TrainingResponse resp = TrainingResponse.builder().message(e.getMessage()).build();
+        return ResponseEntity.internalServerError().body(
+                GenResponse.<TrainingResponse>builder()
+                        .status(StatusEnum.UNEXPECTED_ERROR.getStatus())
+                        .data(resp)
+                        .build()
+        );
     }
 
 }

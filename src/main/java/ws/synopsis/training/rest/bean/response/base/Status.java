@@ -1,4 +1,4 @@
-package ws.synopsis.training.rest.model;
+package ws.synopsis.training.rest.bean.response.base;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Client {
-    private Long idClient;
-    private String name;
-    private String lastName;
-    private String dni;
+public class Status {
+    private String code;
+    private String message;
 }
