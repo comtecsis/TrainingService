@@ -10,7 +10,9 @@ import ws.synopsis.training.rest.bean.request.ClientRequest;
 import ws.synopsis.training.rest.bean.request.PutClientRequest;
 import ws.synopsis.training.rest.bean.response.base.GenResponse;
 import ws.synopsis.training.rest.enumeration.StatusEnum;
+import ws.synopsis.training.rest.exception.TrainingCelularException;
 import ws.synopsis.training.rest.exception.TrainingFieldException;
+import ws.synopsis.training.rest.exception.TrainingIdException;
 import ws.synopsis.training.rest.model.Client;
 import ws.synopsis.training.rest.service.ClientService;
 
@@ -37,7 +39,7 @@ public class ClientController {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> add(@RequestBody ClientRequest beanReq) throws TrainingFieldException {
+    public ResponseEntity<?> add(@RequestBody ClientRequest beanReq) throws TrainingFieldException, TrainingCelularException {
 
         if(StringUtils.isBlank(beanReq.getName())) {
             throw new TrainingFieldException("Nombre no puede estar vac\u00EDo.");
@@ -47,8 +49,11 @@ public class ClientController {
             throw new TrainingFieldException("Apellido no puede estar vac\u00EDo.");
         }
 
-        clientService.add(beanReq);
+        boolean celular_exists=clientService.add(beanReq);
 
+        if(celular_exists) {
+        	throw new TrainingCelularException("El celular ya se encuentra registrado");
+        }
         return ResponseEntity.ok(
                 GenResponse.builder()
                         .status(StatusEnum.OK.getStatus())
@@ -57,7 +62,7 @@ public class ClientController {
     }
 
     @PutMapping("/{clientId}")
-    public ResponseEntity<?> update(@PathVariable("clientId") String clientId, @RequestBody PutClientRequest beanReq) throws TrainingFieldException {
+    public ResponseEntity<?> update(@PathVariable("clientId") String clientId, @RequestBody PutClientRequest beanReq) throws TrainingFieldException,TrainingIdException {
         if( StringUtils.isEmpty(clientId) || !StringUtils.isNumeric(clientId) ) {
             throw new TrainingFieldException("El identidicador debe ser un n\u00FAmero y no puede estar vac\u00EDo.");
         }
@@ -71,7 +76,10 @@ public class ClientController {
         }
 
         beanReq.setId(Long.parseLong(clientId));
-        clientService.update(beanReq);
+        boolean exists=clientService.update(Long.parseLong(clientId),beanReq);
+        if(!exists) {
+        	throw new TrainingIdException("El Id del usuario no existe");
+        }
 
         return ResponseEntity.ok(
                 GenResponse.builder()
