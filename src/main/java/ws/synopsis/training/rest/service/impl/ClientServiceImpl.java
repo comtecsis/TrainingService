@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ws.synopsis.training.rest.bean.request.ClientRequest;
 import ws.synopsis.training.rest.bean.request.PutClientRequest;
+import ws.synopsis.training.rest.exception.TrainingFieldException;
 import ws.synopsis.training.rest.model.Client;
 import ws.synopsis.training.rest.repository.ClientRepository;
 import ws.synopsis.training.rest.service.ClientService;
@@ -35,7 +36,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public void update(PutClientRequest beanReq) {
+    public void update(PutClientRequest beanReq) throws TrainingFieldException {
         clientRepository.update(
                 Client.builder()
                     .idClient(beanReq.getId())

@@ -1,6 +1,7 @@
 package ws.synopsis.training.rest.repository.impl;
 
 import org.springframework.stereotype.Repository;
+import ws.synopsis.training.rest.exception.TrainingFieldException;
 import ws.synopsis.training.rest.model.Client;
 import ws.synopsis.training.rest.repository.ClientRepository;
 
@@ -29,17 +30,27 @@ public class ClientRepositoryImpl implements ClientRepository {
 
     @Override
     public void add(Client client) {
-        long id = (long) CLIENTS.size() + 1;
+        long id = (long) CLIENTS.size()+1;
+
+        while( CLIENTS.containsKey(id) ){
+            id++;
+        }
+
         client.setIdClient(id);
         CLIENTS.put(id, client);
     }
 
     @Override
-    public void update (Client client){
+    public void update (Client client) throws TrainingFieldException {
         Client retrivedClient = CLIENTS.get(client.getIdClient());
-            retrivedClient.setName(client.getName());
-            retrivedClient.setLastName(client.getLastName());
-            retrivedClient.setCellPhone(client.getCellPhone());
+
+        if( retrivedClient == null) {
+            throw new TrainingFieldException("El cliente no est\u00E1 registrado.");
+        }
+
+        retrivedClient.setName(client.getName());
+        retrivedClient.setLastName(client.getLastName());
+        retrivedClient.setCellPhone(client.getCellPhone());
     }
 
     @Override
