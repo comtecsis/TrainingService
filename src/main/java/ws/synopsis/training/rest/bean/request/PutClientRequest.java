@@ -7,4 +7,5 @@ public class PutClientRequest {
     private Long    id;
     private String  name;
     private String  lastName;
+    private int celular;
 }
