@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import ws.synopsis.training.rest.bean.response.TrainingResponse;
 import ws.synopsis.training.rest.bean.response.base.GenResponse;
 import ws.synopsis.training.rest.enumeration.StatusEnum;
+import ws.synopsis.training.rest.exception.TrainingCelularException;
 import ws.synopsis.training.rest.exception.TrainingFieldException;
+import ws.synopsis.training.rest.exception.TrainingIdException;
 
 @ControllerAdvice
 public class TrainingAdvice {
@@ -34,6 +36,30 @@ public class TrainingAdvice {
         return ResponseEntity.internalServerError().body(
                 GenResponse.<TrainingResponse>builder()
                         .status(StatusEnum.UNEXPECTED_ERROR.getStatus())
+                        .data(resp)
+                        .build()
+        );
+    }
+    
+    @ExceptionHandler({TrainingIdException.class})
+    public ResponseEntity<?> field(TrainingIdException e){
+        logger.error(e.getMessage(), e);
+        TrainingResponse resp = TrainingResponse.builder().message(e.getMessage()).build();
+        return ResponseEntity.internalServerError().body(
+                GenResponse.<TrainingResponse>builder()
+                        .status(StatusEnum.ID_NOT_FOUND.getStatus())
+                        .data(resp)
+                        .build()
+        );
+    }
+    
+    @ExceptionHandler({TrainingCelularException.class})
+    public ResponseEntity<?> field(TrainingCelularException e){
+        logger.error(e.getMessage(), e);
+        TrainingResponse resp = TrainingResponse.builder().message(e.getMessage()).build();
+        return ResponseEntity.internalServerError().body(
+                GenResponse.<TrainingResponse>builder()
+                        .status(StatusEnum.CELULAR_REGISTRADO.getStatus())
                         .data(resp)
                         .build()
         );
