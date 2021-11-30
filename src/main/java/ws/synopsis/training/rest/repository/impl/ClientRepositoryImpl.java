@@ -16,10 +16,10 @@ public class ClientRepositoryImpl implements ClientRepository {
 
     static {
         CLIENTS = new HashMap<Long, Client>();
-        CLIENTS.put(1L, Client.builder().idClient(1L).name("Elvis").lastName("Perez").build());
-        CLIENTS.put(2L, Client.builder().idClient(2L).name("Jhonatan").lastName("Evan\u00E0n").build());
-        CLIENTS.put(3L, Client.builder().idClient(3L).name("Arturo").lastName("Nu\u00F1ez").build());
-        CLIENTS.put(4L, Client.builder().idClient(4L).name("Luis").lastName("Quinto").build());
+        CLIENTS.put(1L, Client.builder().idClient(1L).name("Elvis").lastName("Perez").phoneNumber("976161662").build());
+        CLIENTS.put(2L, Client.builder().idClient(2L).name("Jhonatan").lastName("Evan\u00E0n").phoneNumber("976161662").build());
+        CLIENTS.put(3L, Client.builder().idClient(3L).name("Arturo").lastName("Nu\u00F1ez").phoneNumber("976161662").build());
+        CLIENTS.put(4L, Client.builder().idClient(4L).name("Luis").lastName("Quinto").phoneNumber("976161662").build());
     }
 
     @Override
@@ -36,9 +36,11 @@ public class ClientRepositoryImpl implements ClientRepository {
 
     @Override
     public void update (Client client){
+
         Client retrivedClient = CLIENTS.get(client.getIdClient());
             retrivedClient.setName(client.getName());
             retrivedClient.setLastName(client.getLastName());
+            retrivedClient.setLastName(client.getPhoneNumber());
     }
 
     @Override

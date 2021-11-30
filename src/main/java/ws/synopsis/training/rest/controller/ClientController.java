@@ -35,6 +35,10 @@ public class ClientController {
             throw new TrainingFieldException("Apellido no puede estar vac\u00EDo.");
         }
 
+        if(StringUtils.isBlank(beanReq.getPhoneNumber())) {
+            throw new TrainingFieldException("Telefono no puede estar vac\u00EDo.");
+        }
+
         clientService.add(beanReq);
         return ResponseEntity.ok().build();
     }
@@ -51,6 +55,10 @@ public class ClientController {
 
         if( StringUtils.isBlank(beanReq.getLastName()) ) {
             throw new TrainingFieldException("Apellido no puede estar vac\u00EDo.");
+        }
+
+        if(StringUtils.isBlank(beanReq.getPhoneNumber())) {
+            throw new TrainingFieldException("Telefono no puede estar vac\u00EDo.");
         }
 
         beanReq.setId(Long.parseLong(clientId));
