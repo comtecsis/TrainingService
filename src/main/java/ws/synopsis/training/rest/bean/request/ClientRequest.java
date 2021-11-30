@@ -9,4 +9,5 @@ import lombok.Setter;
 public class ClientRequest {
     private String name;
     private String lastName;
+    private String dni;
 }

@@ -47,7 +47,9 @@ public class ClientController {
             throw new TrainingFieldException("Apellido no puede estar vac\u00EDo.");
         }
 
-        clientService.add(beanReq);
+        if(!clientService.add(beanReq)){
+        	throw new TrainingFieldException("DNI ya existe en la base de datos.");
+        }
 
         return ResponseEntity.ok(
                 GenResponse.builder()
@@ -71,7 +73,9 @@ public class ClientController {
         }
 
         beanReq.setId(Long.parseLong(clientId));
-        clientService.update(beanReq);
+        if(!clientService.update(beanReq)) {
+        	throw new TrainingFieldException("El ID ingresado no existe en la BD.");
+        }
 
         return ResponseEntity.ok(
                 GenResponse.builder()

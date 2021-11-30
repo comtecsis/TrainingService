@@ -16,10 +16,10 @@ public class ClientRepositoryImpl implements ClientRepository {
 
     static {
         CLIENTS = new HashMap<Long, Client>();
-        CLIENTS.put(1L, Client.builder().idClient(1L).name("Elvis").lastName("Perez").build());
-        CLIENTS.put(2L, Client.builder().idClient(2L).name("Jhonatan").lastName("Evan\u00E0n").build());
-        CLIENTS.put(3L, Client.builder().idClient(3L).name("Arturo").lastName("Nu\u00F1ez").build());
-        CLIENTS.put(4L, Client.builder().idClient(4L).name("Luis").lastName("Quinto").build());
+        CLIENTS.put(1L, Client.builder().idClient(1L).name("Elvis").lastName("Perez").dni("71202773").build());
+        CLIENTS.put(2L, Client.builder().idClient(2L).name("Jhonatan").lastName("Evan\u00E0n").dni("74356664").build());
+        CLIENTS.put(3L, Client.builder().idClient(3L).name("Arturo").lastName("Nu\u00F1ez").dni("70202773").build());
+        CLIENTS.put(4L, Client.builder().idClient(4L).name("Luis").lastName("Quinto").dni("70282002").build());
     }
 
     @Override
@@ -28,17 +28,26 @@ public class ClientRepositoryImpl implements ClientRepository {
     }
 
     @Override
-    public void add(Client client) {
-        long id = (long) CLIENTS.size() + 1;
+    public boolean add(Client client) {
+    	List<Client> clients = CLIENTS.entrySet().stream().map(k -> k.getValue()).collect(Collectors.toList());
+    	for(Client clientFor :clients) {
+    		if(client.getDni().equals(clientFor.getDni())) {
+    			return false;
+    		}
+    	}
+        long id = (long) CLIENTS.size() + 1;        
         client.setIdClient(id);
         CLIENTS.put(id, client);
+        return true;
     }
 
     @Override
-    public void update (Client client){
+    public boolean update (Client client){
         Client retrivedClient = CLIENTS.get(client.getIdClient());
-            retrivedClient.setName(client.getName());
-            retrivedClient.setLastName(client.getLastName());
+        if (retrivedClient==null) return false;
+        retrivedClient.setName(client.getName());
+        retrivedClient.setLastName(client.getLastName());
+        return true;
     }
 
     @Override
