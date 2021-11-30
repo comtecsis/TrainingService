@@ -16,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ClientServiceImpl implements ClientService {
 
+
     private ClientRepository clientRepository;
 
     @Override
@@ -24,21 +25,25 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public void add(ClientRequest beanReq) {
-        clientRepository.add(
-            Client.builder().name(beanReq.getName()).lastName(beanReq.getLastName()).build()
+    public boolean add(ClientRequest beanReq) {
+        boolean celular_exists=clientRepository.add(
+            Client.builder().name(beanReq.getName()).lastName(beanReq.getLastName()).celular(beanReq.getCelular()).build()
         );
+        
+        return celular_exists;
     }
 
     @Override
-    public void update(PutClientRequest beanRq) {
-        clientRepository.update(
+    public boolean update(long clientId, PutClientRequest beanRq) {
+    	boolean exists=clientRepository.update(clientId,
                 Client.builder()
                     .idClient(beanRq.getId())
                     .name(beanRq.getName())
                     .lastName(beanRq.getLastName())
+                    .celular(beanRq.getCelular())
                     .build()
         );
+        return exists;
     }
 
     @Override

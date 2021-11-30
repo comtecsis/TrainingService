@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ClientService {
     public List<Client> list();
-    public void add(ClientRequest beanReq);
-    public void update(PutClientRequest beanRq);
+    public boolean add(ClientRequest beanReq);
+    public boolean update(long idCliente,PutClientRequest beanRq);
     public void remove(Long clienteId);
 }
