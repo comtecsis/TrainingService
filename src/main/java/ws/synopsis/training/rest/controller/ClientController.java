@@ -47,6 +47,10 @@ public class ClientController {
             throw new TrainingFieldException("Apellido no puede estar vac\u00EDo.");
         }
 
+        if( StringUtils.isEmpty(beanReq.getCellPhone()) || !StringUtils.isNumeric(beanReq.getCellPhone()) ) {
+            throw new TrainingFieldException("El n\u00FAmero de celular debe contener solamente d\u00EDgitos y no puede estar vac\u00EDo.");
+        }
+
         clientService.add(beanReq);
 
         return ResponseEntity.ok(
@@ -68,6 +72,10 @@ public class ClientController {
 
         if( StringUtils.isBlank(beanReq.getLastName()) ) {
             throw new TrainingFieldException("Apellido no puede estar vac\u00EDo.");
+        }
+
+        if( StringUtils.isEmpty(beanReq.getCellPhone()) || !StringUtils.isNumeric(beanReq.getCellPhone()) ) {
+            throw new TrainingFieldException("El n\u00FAmero de celular debe contener solamente d\u00EDgitos y no puede estar vac\u00EDo.");
         }
 
         beanReq.setId(Long.parseLong(clientId));
