@@ -39,6 +39,7 @@ public class ClientRepositoryImpl implements ClientRepository {
         Client retrivedClient = CLIENTS.get(client.getIdClient());
             retrivedClient.setName(client.getName());
             retrivedClient.setLastName(client.getLastName());
+            retrivedClient.setCellPhone(client.getCellPhone());
     }
 
     @Override

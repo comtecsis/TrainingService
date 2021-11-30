@@ -26,17 +26,22 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public void add(ClientRequest beanReq) {
         clientRepository.add(
-            Client.builder().name(beanReq.getName()).lastName(beanReq.getLastName()).build()
+            Client.builder()
+                    .name(beanReq.getName())
+                    .lastName(beanReq.getLastName())
+                    .cellPhone(beanReq.getCellPhone())
+                    .build()
         );
     }
 
     @Override
-    public void update(PutClientRequest beanRq) {
+    public void update(PutClientRequest beanReq) {
         clientRepository.update(
                 Client.builder()
-                    .idClient(beanRq.getId())
-                    .name(beanRq.getName())
-                    .lastName(beanRq.getLastName())
+                    .idClient(beanReq.getId())
+                    .name(beanReq.getName())
+                    .lastName(beanReq.getLastName())
+                    .cellPhone(beanReq.getCellPhone())
                     .build()
         );
     }
