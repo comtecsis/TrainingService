@@ -66,10 +66,10 @@ public class ClientServiceImpl implements ClientService {
 
 	@Override
 	public Client listByPhone(Integer phone) throws TrainingPhoneNotExists {
-		List<Client> clients = (List<Client>)clientRepository.findAll();
-		for(Client client:clients) {
-			if(client.getPhone().equals(phone)) return client;
-		}
+		Optional<Client> client = clientRepository.findByPhone(phone);
+        if(client.isPresent()) {
+            return client.get();
+        }
 		throw new TrainingPhoneNotExists ("El celular ingresado no se encontro");
 	}
     

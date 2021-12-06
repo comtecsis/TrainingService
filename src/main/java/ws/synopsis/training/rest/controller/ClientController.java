@@ -59,7 +59,7 @@ public class ClientController {
         );
     }
     
-    @GetMapping("/{phone}")
+    @GetMapping("/filter/phone/{phone}")
     public ResponseEntity<?> listByPhone(@PathVariable("phone") Integer phone) throws TrainingPhoneNotExists {
         Client client = clientService.listByPhone(phone);
         return ResponseEntity.ok(
