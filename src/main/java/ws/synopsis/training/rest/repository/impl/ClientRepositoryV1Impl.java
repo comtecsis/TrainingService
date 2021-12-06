@@ -1,25 +1,23 @@
 package ws.synopsis.training.rest.repository.impl;
 
-import org.springframework.stereotype.Repository;
 import ws.synopsis.training.rest.model.Client;
-import ws.synopsis.training.rest.repository.ClientRepository;
+import ws.synopsis.training.rest.repository.ClientRepositoryV1;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Repository
-public class ClientRepositoryImpl implements ClientRepository {
+public class ClientRepositoryV1Impl implements ClientRepositoryV1 {
 
     private static final Map<Long, Client> CLIENTS;
 
     static {
         CLIENTS = new HashMap<Long, Client>();
-        CLIENTS.put(1L, Client.builder().idClient(1L).name("Elvis").lastName("Perez").celular(993819382).build());
-        CLIENTS.put(2L, Client.builder().idClient(2L).name("Jhonatan").lastName("Evan\u00E0n").celular(983617383).build());
-        CLIENTS.put(3L, Client.builder().idClient(3L).name("Arturo").lastName("Nu\u00F1ez").celular(939137382).build());
-        CLIENTS.put(4L, Client.builder().idClient(4L).name("Luis").lastName("Quinto").celular(993133424).build());
+        CLIENTS.put(1L, Client.builder().idClient(1L).name("Elvis").lastName("Perez").phone(993819382).build());
+        CLIENTS.put(2L, Client.builder().idClient(2L).name("Jhonatan").lastName("Evan\u00E0n").phone(983617383).build());
+        CLIENTS.put(3L, Client.builder().idClient(3L).name("Arturo").lastName("Nu\u00F1ez").phone(939137382).build());
+        CLIENTS.put(4L, Client.builder().idClient(4L).name("Luis").lastName("Quinto").phone(993133424).build());
     }
 
     @Override
@@ -30,7 +28,7 @@ public class ClientRepositoryImpl implements ClientRepository {
     @Override
     public boolean add(Client client) {
         for(Map.Entry<Long, Client> m:CLIENTS.entrySet()) {
-        	if(m.getValue().getCelular() == client.getCelular()) {
+        	if(m.getValue().getPhone().equals(client.getPhone())) {
         		return true;
         	}
         }
@@ -51,7 +49,7 @@ public class ClientRepositoryImpl implements ClientRepository {
         Client retrivedClient = CLIENTS.get(client.getIdClient());
             retrivedClient.setName(client.getName());
             retrivedClient.setLastName(client.getLastName());
-            retrivedClient.setCelular(client.getCelular());
+            retrivedClient.setPhone(client.getPhone());
         return true;
     }
 

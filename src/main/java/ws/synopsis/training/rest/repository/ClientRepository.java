@@ -1,12 +1,11 @@
 package ws.synopsis.training.rest.repository;
 
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 import ws.synopsis.training.rest.model.Client;
 
 import java.util.List;
 
-public interface ClientRepository {
-    public List<Client> list();
-    public boolean add(Client client);
-    public boolean update(long idCliente,Client client);
-    public void remove(Long clientId);
+@Repository
+public interface ClientRepository extends CrudRepository<Client, Long> {
 }

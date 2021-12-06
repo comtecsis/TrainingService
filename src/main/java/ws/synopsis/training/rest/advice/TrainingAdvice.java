@@ -1,7 +1,9 @@
 package ws.synopsis.training.rest.advice;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,6 +18,17 @@ import ws.synopsis.training.rest.exception.TrainingIdException;
 public class TrainingAdvice {
 
     private static final Logger logger = LoggerFactory.getLogger(TrainingAdvice.class);
+
+    @ExceptionHandler({DataIntegrityViolationException.class})
+    public ResponseEntity<?> fieldDuplicated(DataIntegrityViolationException e) {
+        logger.error(e.getMessage(), e);
+        TrainingResponse resp = TrainingResponse.builder().message(e.getMessage()).build();
+        return ResponseEntity.internalServerError().body(
+                GenResponse.<TrainingResponse>builder()
+                        .status(StatusEnum.FIELD_DUPLICATED.getStatus())
+                        .build()
+        );
+    }
 
     @ExceptionHandler({TrainingFieldException.class})
     public ResponseEntity<?> field(TrainingFieldException e){

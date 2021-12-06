@@ -49,11 +49,8 @@ public class ClientController {
             throw new TrainingFieldException("Apellido no puede estar vac\u00EDo.");
         }
 
-        boolean celular_exists=clientService.add(beanReq);
+        clientService.add(beanReq);
 
-        if(celular_exists) {
-        	throw new TrainingCelularException("El celular ya se encuentra registrado");
-        }
         return ResponseEntity.ok(
                 GenResponse.builder()
                         .status(StatusEnum.OK.getStatus())
@@ -76,10 +73,7 @@ public class ClientController {
         }
 
         beanReq.setId(Long.parseLong(clientId));
-        boolean exists=clientService.update(Long.parseLong(clientId),beanReq);
-        if(!exists) {
-        	throw new TrainingIdException("El Id del usuario no existe");
-        }
+        clientService.update(beanReq);
 
         return ResponseEntity.ok(
                 GenResponse.builder()
@@ -91,7 +85,7 @@ public class ClientController {
     @DeleteMapping("/{clientId}")
     public ResponseEntity<?> delete(@PathVariable("clientId") String clientId) throws TrainingFieldException{
         if( StringUtils.isEmpty(clientId) || !StringUtils.isNumeric(clientId) ) {
-            throw new TrainingFieldException("El identidicador debe ser un n\u00FAmero y no puede estar vac\u00EDo.");
+            throw new TrainingFieldException("El identificador debe ser un n\u00FAmero y no puede estar vac\u00EDo.");
         }
         clientService.remove(Long.parseLong(clientId));
 
