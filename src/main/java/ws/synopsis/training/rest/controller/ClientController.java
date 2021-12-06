@@ -13,6 +13,7 @@ import ws.synopsis.training.rest.enumeration.StatusEnum;
 import ws.synopsis.training.rest.exception.TrainingCelularException;
 import ws.synopsis.training.rest.exception.TrainingFieldException;
 import ws.synopsis.training.rest.exception.TrainingIdException;
+import ws.synopsis.training.rest.exception.TrainingPhoneNotExists;
 import ws.synopsis.training.rest.model.Client;
 import ws.synopsis.training.rest.service.ClientService;
 
@@ -54,6 +55,17 @@ public class ClientController {
         return ResponseEntity.ok(
                 GenResponse.builder()
                         .status(StatusEnum.OK.getStatus())
+                        .build()
+        );
+    }
+    
+    @GetMapping("/{phone}")
+    public ResponseEntity<?> listByPhone(@PathVariable("phone") Integer phone) throws TrainingPhoneNotExists {
+        Client client = clientService.listByPhone(phone);
+        return ResponseEntity.ok(
+                GenResponse.builder()
+                        .status(StatusEnum.OK.getStatus())
+                        .data(client)
                         .build()
         );
     }

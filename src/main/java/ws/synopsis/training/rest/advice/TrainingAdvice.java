@@ -13,6 +13,7 @@ import ws.synopsis.training.rest.enumeration.StatusEnum;
 import ws.synopsis.training.rest.exception.TrainingCelularException;
 import ws.synopsis.training.rest.exception.TrainingFieldException;
 import ws.synopsis.training.rest.exception.TrainingIdException;
+import ws.synopsis.training.rest.exception.TrainingPhoneNotExists;
 
 @ControllerAdvice
 public class TrainingAdvice {
@@ -73,6 +74,18 @@ public class TrainingAdvice {
         return ResponseEntity.internalServerError().body(
                 GenResponse.<TrainingResponse>builder()
                         .status(StatusEnum.CELULAR_REGISTRADO.getStatus())
+                        .data(resp)
+                        .build()
+        );
+    }
+    
+    @ExceptionHandler({TrainingPhoneNotExists.class})
+    public ResponseEntity<?> field(TrainingPhoneNotExists e){
+        logger.error(e.getMessage(), e);
+        TrainingResponse resp = TrainingResponse.builder().message(e.getMessage()).build();
+        return ResponseEntity.internalServerError().body(
+                GenResponse.<TrainingResponse>builder()
+                        .status(StatusEnum.PHONE_NOT_EXISTS.getStatus())
                         .data(resp)
                         .build()
         );

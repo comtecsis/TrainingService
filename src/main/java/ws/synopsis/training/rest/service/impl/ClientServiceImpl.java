@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ws.synopsis.training.rest.bean.request.ClientRequest;
 import ws.synopsis.training.rest.bean.request.PutClientRequest;
 import ws.synopsis.training.rest.exception.TrainingIdException;
+import ws.synopsis.training.rest.exception.TrainingPhoneNotExists;
 import ws.synopsis.training.rest.model.Client;
 import ws.synopsis.training.rest.repository.ClientRepository;
 import ws.synopsis.training.rest.repository.ClientRepositoryV1;
@@ -24,6 +25,8 @@ public class ClientServiceImpl implements ClientService {
     public List<Client> list() {
         return (List<Client>) clientRepository.findAll();
     }
+    
+    
 
     @Override
     public void add(ClientRequest beanReq) {
@@ -58,5 +61,18 @@ public class ClientServiceImpl implements ClientService {
     public void remove(Long clientId) {
         clientRepository.deleteById(clientId);
     }
+
+
+
+	@Override
+	public Client listByPhone(Integer phone) throws TrainingPhoneNotExists {
+		List<Client> clients = (List<Client>)clientRepository.findAll();
+		for(Client client:clients) {
+			if(client.getPhone().equals(phone)) return client;
+		}
+		throw new TrainingPhoneNotExists ("El celular ingresado no se encontro");
+	}
+    
+    
 
 }
