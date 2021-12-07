@@ -13,6 +13,7 @@ import ws.synopsis.training.rest.enumeration.StatusEnum;
 import ws.synopsis.training.rest.exception.TrainingCelularException;
 import ws.synopsis.training.rest.exception.TrainingFieldException;
 import ws.synopsis.training.rest.exception.TrainingIdException;
+import ws.synopsis.training.rest.exception.TrainingLastNameException;
 import ws.synopsis.training.rest.exception.TrainingPhoneNotExists;
 import ws.synopsis.training.rest.model.Client;
 import ws.synopsis.training.rest.service.ClientService;
@@ -69,7 +70,26 @@ public class ClientController {
                         .build()
         );
     }
-
+    
+    @GetMapping("/filter/lastName/{lastName}")
+    public ResponseEntity<?> listByLastName(@PathVariable("lastName") String lastName) throws TrainingFieldException {
+        
+        
+        if(StringUtils.isBlank(lastName) || StringUtils.isNumeric(lastName)) {
+        	throw new TrainingFieldException("El apellido debe ser un n\u00FAmero y no puede estar vac\u00EDo.");
+        }
+        
+        List<Client> clients = clientService.listByLastName(lastName);
+        
+        return ResponseEntity.ok(
+                GenResponse.builder()
+                        .status(StatusEnum.OK.getStatus())
+                        .data(clients)
+                        .build()
+        );
+       
+    }
+    
     @PutMapping("/{clientId}")
     public ResponseEntity<?> update(@PathVariable("clientId") String clientId, @RequestBody PutClientRequest beanReq) throws TrainingFieldException,TrainingIdException {
         if( StringUtils.isEmpty(clientId) || !StringUtils.isNumeric(clientId) ) {
