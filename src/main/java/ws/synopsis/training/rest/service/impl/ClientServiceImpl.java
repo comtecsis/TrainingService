@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import ws.synopsis.training.rest.bean.request.ClientRequest;
 import ws.synopsis.training.rest.bean.request.PutClientRequest;
 import ws.synopsis.training.rest.exception.TrainingIdException;
-import ws.synopsis.training.rest.exception.TrainingLastNameException;
 import ws.synopsis.training.rest.exception.TrainingPhoneNotExists;
 import ws.synopsis.training.rest.model.Client;
 import ws.synopsis.training.rest.repository.ClientRepository;

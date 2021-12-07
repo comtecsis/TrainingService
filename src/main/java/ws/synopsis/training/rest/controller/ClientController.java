@@ -13,7 +13,6 @@ import ws.synopsis.training.rest.enumeration.StatusEnum;
 import ws.synopsis.training.rest.exception.TrainingCelularException;
 import ws.synopsis.training.rest.exception.TrainingFieldException;
 import ws.synopsis.training.rest.exception.TrainingIdException;
-import ws.synopsis.training.rest.exception.TrainingLastNameException;
 import ws.synopsis.training.rest.exception.TrainingPhoneNotExists;
 import ws.synopsis.training.rest.model.Client;
 import ws.synopsis.training.rest.service.ClientService;
