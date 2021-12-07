@@ -81,6 +81,10 @@ public class ClientServiceImpl implements ClientService {
 		return lista;
 	}
     
-    
+	@Override
+	public List<Client> listByname(String name){
+		List<Client> lista=(List<Client>) clientRepository.findByname(name);
+		return lista;
+	}
 
 }

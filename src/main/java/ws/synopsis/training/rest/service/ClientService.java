@@ -15,4 +15,6 @@ public interface ClientService {
     public void add(ClientRequest beanReq);
     public void update(PutClientRequest beanRq) throws TrainingIdException;
     public void remove(Long clienteId);
+    public List<Client> listByname(String name);
+
 }

@@ -126,5 +126,22 @@ public class ClientController {
                         .build()
         );
     }
-
+    
+    @GetMapping("/filter/name/{name}")
+    public ResponseEntity<?> listByname(@PathVariable("name") String name) throws TrainingFieldException {
+        
+        
+        if(StringUtils.isBlank(name) || StringUtils.isNumeric(name)) {
+        	throw new TrainingFieldException("El nombre no puede estar vac\u00EDo.");
+        }
+        
+        List<Client> clients = clientService.listByname(name);
+        
+        return ResponseEntity.ok(
+                GenResponse.builder()
+                        .status(StatusEnum.OK.getStatus())
+                        .data(clients)
+                        .build()
+        );
+    }
 }

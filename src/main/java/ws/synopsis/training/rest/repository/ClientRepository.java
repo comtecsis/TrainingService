@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface ClientRepository extends CrudRepository<Client, Long> {
     public Optional<Client> findByPhone(Integer phone);
     public List<Client> findByLastName(String lastName);
+    public List<Client> findByname(String name);
 }
