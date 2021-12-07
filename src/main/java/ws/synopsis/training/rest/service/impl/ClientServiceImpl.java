@@ -73,6 +73,10 @@ public class ClientServiceImpl implements ClientService {
 		throw new TrainingPhoneNotExists ("El celular ingresado no se encontro");
 	}
     
-    
+	@Override
+	public List<Client> listByname(String name){
+		List<Client> lista=(List<Client>) clientRepository.findByname(name);
+		return lista;
+	}
 
 }
