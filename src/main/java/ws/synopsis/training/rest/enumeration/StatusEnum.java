@@ -12,7 +12,8 @@ public enum StatusEnum {
 	ID_NOT_FOUND("9002","Id de cliente no encontrado"),
     FIELD_DUPLICATED("9003", "Campo duplicado."),
 	CELULAR_REGISTRADO("9003","El celular ya se encuentra registrado en el sistema"),
-	PHONE_NOT_EXISTS("9004", "El celular ingresado no existe en la BD");
+	PHONE_NOT_EXISTS("9004", "El celular ingresado no existe en la BD"),
+	LASTNAME_NOT_EXISTS("9010","Ningun cliente con ese apellido");
 
     private final Status status;
 
