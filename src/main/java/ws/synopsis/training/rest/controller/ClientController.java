@@ -8,13 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ws.synopsis.training.rest.bean.request.ClientRequest;
 import ws.synopsis.training.rest.bean.request.PutClientRequest;
+import ws.synopsis.training.rest.bean.response.ClientResponse;
 import ws.synopsis.training.rest.bean.response.base.GenResponse;
 import ws.synopsis.training.rest.enumeration.StatusEnum;
 import ws.synopsis.training.rest.exception.TrainingCelularException;
 import ws.synopsis.training.rest.exception.TrainingFieldException;
 import ws.synopsis.training.rest.exception.TrainingIdException;
 import ws.synopsis.training.rest.exception.TrainingPhoneNotExists;
-import ws.synopsis.training.rest.model.Client;
 import ws.synopsis.training.rest.service.ClientService;
 
 import java.util.List;
@@ -30,7 +30,7 @@ public class ClientController {
 
     @GetMapping("")
     public ResponseEntity<?> list() {
-        List<Client> clients = clientService.list();
+        List<ClientResponse> clients = clientService.list();
         return ResponseEntity.ok(
                 GenResponse.builder()
                         .status(StatusEnum.OK.getStatus())
@@ -61,7 +61,7 @@ public class ClientController {
     
     @GetMapping("/filter/phone/{phone}")
     public ResponseEntity<?> listByPhone(@PathVariable("phone") Integer phone) throws TrainingPhoneNotExists {
-        Client client = clientService.listByPhone(phone);
+        ClientResponse client = clientService.listByPhone(phone);
         return ResponseEntity.ok(
                 GenResponse.builder()
                         .status(StatusEnum.OK.getStatus())
@@ -78,7 +78,7 @@ public class ClientController {
         	throw new TrainingFieldException("El apellido debe ser un n\u00FAmero y no puede estar vac\u00EDo.");
         }
         
-        List<Client> clients = clientService.listByLastName(lastName);
+        List<ClientResponse> clients = clientService.listByLastName(lastName);
         
         return ResponseEntity.ok(
                 GenResponse.builder()
@@ -135,7 +135,7 @@ public class ClientController {
         	throw new TrainingFieldException("El nombre no puede estar vac\u00EDo.");
         }
         
-        List<Client> clients = clientService.listByname(name);
+        List<ClientResponse> clients = clientService.listByname(name);
         
         return ResponseEntity.ok(
                 GenResponse.builder()

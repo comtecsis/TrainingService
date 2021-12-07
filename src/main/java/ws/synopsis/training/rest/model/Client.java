@@ -20,12 +20,16 @@ public class Client {
     @Column(name = "clientId")
     private Long idClient;
 
-    @Column(name = "clientName")
+    @Column(name = "clientName", length = 100)
     private String name;
 
-    @Column(name = "clientLastName")
+    @Column(name = "clientLastName", length = 100)
     private String lastName;
 
     @Column(name = "clientPhone", unique = true)
     private Integer phone;
+
+    @Column(name = "client_password")
+    private String word;
+
 }

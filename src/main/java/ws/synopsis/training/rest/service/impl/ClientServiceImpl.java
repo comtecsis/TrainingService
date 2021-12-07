@@ -4,15 +4,16 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ws.synopsis.training.rest.bean.request.ClientRequest;
 import ws.synopsis.training.rest.bean.request.PutClientRequest;
+import ws.synopsis.training.rest.bean.response.ClientResponse;
 import ws.synopsis.training.rest.exception.TrainingIdException;
 import ws.synopsis.training.rest.exception.TrainingPhoneNotExists;
 import ws.synopsis.training.rest.model.Client;
 import ws.synopsis.training.rest.repository.ClientRepository;
-import ws.synopsis.training.rest.repository.ClientRepositoryV1;
 import ws.synopsis.training.rest.service.ClientService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -22,8 +23,10 @@ public class ClientServiceImpl implements ClientService {
     private ClientRepository clientRepository;
 
     @Override
-    public List<Client> list() {
-        return (List<Client>) clientRepository.findAll();
+    public List<ClientResponse> list() {
+        return ((List<Client>) clientRepository.findAll()).stream()
+            .map(ClientResponse::new)
+            .collect(Collectors.toList());
     }
     
     
@@ -32,7 +35,12 @@ public class ClientServiceImpl implements ClientService {
     public void add(ClientRequest beanReq) {
 
         clientRepository.save(
-            Client.builder().name(beanReq.getName()).lastName(beanReq.getLastName()).phone(beanReq.getPhone()).build()
+            Client.builder()
+                .name(beanReq.getName())
+                .lastName(beanReq.getLastName())
+                .phone(beanReq.getPhone())
+                .word(beanReq.getWord())
+                .build()
         );
 
     }
@@ -52,6 +60,7 @@ public class ClientServiceImpl implements ClientService {
                     .name(beanRq.getName())
                     .lastName(beanRq.getLastName())
                     .phone(beanRq.getPhone())
+                    .word(beanRq.getWord())
                     .build()
         );
 
@@ -65,10 +74,10 @@ public class ClientServiceImpl implements ClientService {
 
 
 	@Override
-	public Client listByPhone(Integer phone) throws TrainingPhoneNotExists {
+	public ClientResponse listByPhone(Integer phone) throws TrainingPhoneNotExists {
 		Optional<Client> client = clientRepository.findByPhone(phone);
         if(client.isPresent()) {
-            return client.get();
+            return new ClientResponse(client.get());
         }
 		throw new TrainingPhoneNotExists ("El celular ingresado no se encontro");
 	}
@@ -76,15 +85,19 @@ public class ClientServiceImpl implements ClientService {
 
 
 	@Override
-	public List<Client> listByLastName(String lastName){
+	public List<ClientResponse> listByLastName(String lastName){
 		List<Client> lista=(List<Client>) clientRepository.findByLastName(lastName);
-		return lista;
+		return lista.stream()
+                .map(ClientResponse::new)
+                .collect(Collectors.toList());
 	}
     
 	@Override
-	public List<Client> listByname(String name){
-		List<Client> lista=(List<Client>) clientRepository.findByname(name);
-		return lista;
+	public List<ClientResponse> listByname(String name){
+		List<Client> lista = (List<Client>) clientRepository.findByname(name);
+		return lista.stream()
+                .map(ClientResponse::new)
+                .collect(Collectors.toList());
 	}
 
 }

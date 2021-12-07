@@ -8,4 +8,5 @@ public class PutClientRequest {
     private String  name;
     private String  lastName;
     private Integer phone;
+    private String word;
 }
