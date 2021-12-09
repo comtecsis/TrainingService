@@ -10,15 +10,22 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import ws.synopsis.training.rest.bean.response.TrainingResponse;
 import ws.synopsis.training.rest.bean.response.base.GenResponse;
 import ws.synopsis.training.rest.enumeration.StatusEnum;
-import ws.synopsis.training.rest.exception.TrainingCelularException;
-import ws.synopsis.training.rest.exception.TrainingFieldException;
-import ws.synopsis.training.rest.exception.TrainingIdException;
-import ws.synopsis.training.rest.exception.TrainingPhoneNotExists;
+import ws.synopsis.training.rest.exception.*;
 
 @ControllerAdvice
 public class TrainingAdvice {
 
     private static final Logger logger = LoggerFactory.getLogger(TrainingAdvice.class);
+
+    @ExceptionHandler({TrainingLogicException.class})
+    public ResponseEntity<?> logic(TrainingLogicException e) {
+        logger.error(e.getMessage(), e);
+        return ResponseEntity.internalServerError().body(
+                GenResponse.<TrainingResponse>builder()
+                        .status(e.getStatus().getStatus())
+                        .build()
+        );
+    }
 
     @ExceptionHandler({DataIntegrityViolationException.class})
     public ResponseEntity<?> fieldDuplicated(DataIntegrityViolationException e) {

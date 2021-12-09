@@ -1,4 +1,4 @@
-package ws.synopsis.training.rest.dao;
+package ws.synopsis.training.rest.dao.sp;
 
 import java.util.Map;
 
@@ -22,14 +22,13 @@ public abstract class SPAbstract {
     //este excecute usa al simplejdccall de la calse padre CPStoredProcedure
     @Transactional
     public Map<String, Object> execute(SqlParameterSource parameters) {
-        getSimpleJdbcCall().getJdbcTemplate().execute("SET CHAINED OFF");
         return getSimpleJdbcCall().execute(parameters);
     }
 
     @PostConstruct
     public abstract void configSP();
 
-    private SimpleJdbcCall getSimpleJdbcCall() {
+    protected SimpleJdbcCall getSimpleJdbcCall() {
         return simpleJdbcCall;
     }
 

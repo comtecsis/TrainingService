@@ -13,6 +13,7 @@ public enum StatusEnum {
     FIELD_DUPLICATED("9003", "Campo duplicado."),
 	CELULAR_REGISTRADO("9003","El celular ya se encuentra registrado en el sistema"),
 	PHONE_NOT_EXISTS("9004", "El celular ingresado no existe en la BD"),
+    LOGIN_ERROR("9005", "Credenciales inv\u00E1lidas."),
 	LASTNAME_NOT_EXISTS("9010","Ningun cliente con ese apellido");
 
     private final Status status;
