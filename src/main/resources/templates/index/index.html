@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi primera pagina</title>
+    <link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{css/training.css}">
+</head>
+<body>
+    <div id="training-header" class="container">
+        <div class="alert alert-primary" role="alert">
+            Hola [[${name}]]
+        </div>
+    </div>
+    <script th:src="@{js/bootstrap.min.js}"></script>
+    <script th:src="@{js/jquery-3.6.0.min.js}"></script>
+</body>
+</html>

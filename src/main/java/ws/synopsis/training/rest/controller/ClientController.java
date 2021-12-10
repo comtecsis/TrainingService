@@ -6,16 +6,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ws.synopsis.training.rest.bean.request.ClientRequest;
-import ws.synopsis.training.rest.bean.request.PutClientRequest;
-import ws.synopsis.training.rest.bean.response.ClientResponse;
-import ws.synopsis.training.rest.bean.response.base.GenResponse;
-import ws.synopsis.training.rest.enumeration.StatusEnum;
-import ws.synopsis.training.rest.exception.TrainingCelularException;
-import ws.synopsis.training.rest.exception.TrainingFieldException;
-import ws.synopsis.training.rest.exception.TrainingIdException;
-import ws.synopsis.training.rest.exception.TrainingPhoneNotExists;
-import ws.synopsis.training.rest.service.ClientService;
+import ws.synopsis.training.bean.request.ClientRequest;
+import ws.synopsis.training.bean.request.PutClientRequest;
+import ws.synopsis.training.bean.response.ClientResponse;
+import ws.synopsis.training.bean.response.base.GenResponse;
+import ws.synopsis.training.enumeration.StatusEnum;
+import ws.synopsis.training.exception.TrainingCelularException;
+import ws.synopsis.training.exception.TrainingFieldException;
+import ws.synopsis.training.exception.TrainingIdException;
+import ws.synopsis.training.exception.TrainingPhoneNotExists;
+import ws.synopsis.training.service.ClientService;
 
 import java.util.List;
 
