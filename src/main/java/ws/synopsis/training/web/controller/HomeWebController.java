@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import ws.synopsis.training.web.bean.request.IndexRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,8 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 public class HomeWebController {
 
     @GetMapping
-    public String index(Model model, HttpServletRequest request) {
-        String name = request.getParameter("name");
+    public String index(Model model, IndexRequest request) {
+        String name = request.getName() ;
         model.addAttribute("name", name);
         return "index/index";
     }
